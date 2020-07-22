@@ -1,0 +1,21 @@
+.app {
+  display: flex;
+  justify-content: row;
+  width: 100%;
+
+  .app-content {
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+.mdc-drawer {
+  &__header {
+    padding: 0;
+  }
+  &__title {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+
+}

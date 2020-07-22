@@ -11,6 +11,6 @@ firebase.initializeApp({
   appId: "1:898449607629:web:6a04394eba5c16934a5284"
 });
 
-var db = firebase.firestore();
+const db = firebase.firestore();
 
 export { db };
