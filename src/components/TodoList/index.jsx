@@ -1,18 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
   Typography,
-  List,
-  Spinner
+  List
 } from 'mdc-react';
 
 import DBContext from '../../context/db';
 
 import TodoListItem from '../TodoListItem';
 
+import './index.scss';
+
 export default function TodoList({ match }) {
   const [todos, setTodos] = useState([]);
   const db = useContext(DBContext);
-  
   useEffect(() => {
     db.get('todos')(collection => 
       collection.where('listId', '==', match.params.listId)
@@ -21,11 +21,16 @@ export default function TodoList({ match }) {
 
   const list = db.lists.find(list => list.id === match.params.listId);
 
-  if ( !list ) return <Spinner />;
+  if ( !list  ) return "loading";
 
   return (
     <div className="todo-list">
-      <Typography className="todo-list__title" variant="headline4" noMargin>{ list.title }</Typography>
+      <Typography 
+        className="todo-list__title" 
+        variant="headline4" 
+      >
+        { list.title }
+      </Typography>
       <List className="todo-list__items">
         {todos.map(todo => 
           <TodoListItem 
@@ -36,4 +41,4 @@ export default function TodoList({ match }) {
       </List>
     </div>
   );
-}
+} 

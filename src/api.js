@@ -7,7 +7,7 @@ export function get(collectionName) {
     return query(collection)
       .get()
       .then(snapshot => {
-        console.log(snapshot)
+        //console.log(snapshot)
         const items = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()

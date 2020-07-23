@@ -43,7 +43,7 @@ export default function AppDrawer({ lists }) {
             <List>
               {lists.map(item =>
                 <ListItem 
-                  key={item.key}
+                  key={item.id}
                   component={NavLink}
                   to={item.id}
                 >

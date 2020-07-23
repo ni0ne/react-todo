@@ -4,11 +4,13 @@ import {
   ListItem, ListItemGraphic, ListItemText
 } from 'mdc-react';
 
-export default function TodoListItem( todo, onCompleteChange ) {
+import './index.scss';
+
+export default function TodoListItem({ todo, onCompleteChange }) {
   return (
     <ListItem>
       <ListItemGraphic>
-        <Checkbox 
+        <Checkbox
           checked={todo.completed}
           onChange={todo.onCompleteChange}
         />
