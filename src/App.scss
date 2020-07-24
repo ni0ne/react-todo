@@ -19,3 +19,12 @@
   }
 
 }
+
+.mdc-layout {
+  flex: 1;
+
+  &--row {
+    display: flex;
+    flex-direction: row;;
+  }
+}

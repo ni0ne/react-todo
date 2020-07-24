@@ -51,6 +51,15 @@ export function createTodo(data) {
   });
 }
 
+
+export function updateTodo(todoId, data) {
+  return db.collection('todos').doc(todoId).update(data)
+  .then(res => console.log(res))
+  .catch(function(error) {
+      console.error("Error writing document: ", error);
+  });
+}
+
 export function deleteTodo(todoId) {
   return db.collection('todos').doc(todoId).delete().then(
     () => todoId

@@ -1,54 +1,71 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
+  Layout,
   Spinner
 } from 'mdc-react';
-import DBContext from '../context/db';
+
+import UseApi from '../hooks/api';
 
 import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
+import TodoDetails from '../components/TodoDetails';
 
 import './index.scss';
 
 export default function TodoListPage({ match }) {
-  const db = useContext(DBContext);
-  const [todos, setTodos] = useState([]);
+  const [selectedTodo, setSelectedTodo] = useState(null);
+  const { data: { lists, todos }, actions } = UseApi();
 
   useEffect(() => {
-    setTodos();
 
-    db.getListTodos(match.params.listId)
-      .then(setTodos);
-  }, [db, match.params.listId]);
-
-  const list = db.lists.find(list => list.id === match.params.listId);
+    actions.getListTodos(match.params.listId);
+  }, [actions, match.params.listId]);
 
   function handleSubmit(title) {
-    db.createTodo({
+    actions.createTodo({
       title,
       listId: list.id
-    }).then(todo => {
-      setTodos([...todos, todo])
     });
   }
 
   function handleDelete(todoId) {
-    db.deleteTodo(todoId).then(todoId => {
-      setTodos([...todos.filter(t => t.id !== todoId)])
-    });
+    actions.deleteTodo(todoId);
   }
+
+  function handleUpdate(todoId, data) {
+    actions.updateTodo(todoId, data)
+  }
+
+  function handleSelect(todo) {
+    setSelectedTodo(todo);
+  }
+
+  const list = lists.find(list => list.id === match.params.listId);
 
   if ( !list || !todos ) return <Spinner />; // change to "loading"
 
   return (
-    <div id="todo-list-page" className="page">
-      <TodoList 
-      list={list}
-      todos={todos}
-      onDelete={handleDelete}
-    />
-    <TodoForm 
-      onSubmit={handleSubmit}
-    />
-    </div>
+    <Layout id="todo-list-page" className="page" row>
+      <Layout>
+        <TodoList 
+          list={list}
+          todos={todos}
+          onSelect={handleSelect}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
+        />
+      
+        <TodoForm 
+          onSubmit={handleSubmit}
+        />
+      </Layout>
+      
+
+      { selectedTodo &&
+        <TodoDetails 
+          todo={selectedTodo}
+        />
+      }
+    </Layout>
   );
 } 

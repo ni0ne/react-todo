@@ -8,7 +8,13 @@ import TodoListItem from '../TodoListItem';
 
 import './index.scss';
 
-export default function TodoList({ list, todos, onDelete }) {
+export default function TodoList({ 
+  list, 
+  todos, 
+  onUpdate,
+  onDelete,
+  onSelect
+}) {
   return (
     <div className="todo-list">
       <Typography 
@@ -20,9 +26,13 @@ export default function TodoList({ list, todos, onDelete }) {
       <List className="todo-list__items">
         {todos.map(todo => 
           <TodoListItem 
+            className="todo-list__items__item"
+
             key={todo.id}
             todo={todo}
+            onUpdate={onUpdate}
             onDelete={onDelete}
+            onSelect={onSelect}
           />
         )}
       </List>

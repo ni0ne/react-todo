@@ -9,19 +9,25 @@ import {
 import './index.scss';
 
 export default function TodoListItem({ 
-  todo, 
-  onStatusChange,
-  onDelete
+  todo,
+  onUpdate,
+  onDelete,
+  onSelect
 }) {
+  function handleChange(completed) {
+    console.log(completed);
+    onUpdate(todo.id, { completed });
+  }
+
   return (
     <ListItem>
       <ListItemGraphic>
         <Checkbox
           checked={todo.completed}
-          onChange={onStatusChange}
+          onChange={handleChange}
         />
       </ListItemGraphic>
-      <ListItemText>{todo.title}</ListItemText>
+      <ListItemText onClick={() => onSelect(todo)}>{todo.title}</ListItemText>
 
       <ListItemMeta>
         <IconButton onClick={() => onDelete(todo.id)}>
